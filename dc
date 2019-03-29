@@ -1,0 +1,6 @@
+%2F%2F Cool Class Diagram, [Graph|mapId:String;mapName:String]-nodes0..*[Node|Id:int], 
+[Arc]0..*-0..*>[Node], 
+[Path]-arcs 0..*>[Arc],
+[Path]-origin 0..1>[Node],
+[Path]-graph 0..1>[Graph],
+[Arc]->[RoadInformation],
