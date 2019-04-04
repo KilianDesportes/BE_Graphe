@@ -29,13 +29,63 @@ public class Path {
      * 
      * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
      *         consecutive nodes in the list are not connected in the graph.
-     * 
-     * @deprecated Need to be implemented.
      */
     public static Path createFastestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
         List<Arc> arcs = new ArrayList<Arc>();
-        // TODO:
+        
+        System.out.println("____NEW CALL____");
+        
+        boolean b_contains = true;
+        
+        for (Node var_node : nodes) 
+        { 
+        	System.out.println("Node : " + var_node);
+            if(!graph.getNodes().contains(var_node)) {
+            	b_contains = false;
+            }
+        }
+        
+        if(!b_contains) {
+        	System.out.println("Some nodes are not in the graph.");
+        	throw new IllegalArgumentException();
+        }else {
+        	System.out.println("Every nodes are in the graph.");
+        }
+        
+        int i_indice_nodes = 0;
+        boolean b_first = true;
+        if(nodes.size()==1) {
+        	System.out.println("Size = 1, origin : " + nodes.get(0).getSuccessors().get(0).getOrigin());
+        	System.out.println("Size = 1, destination : " + nodes.get(0).getSuccessors().get(0).getDestination());
+
+        	arcs.add(nodes.get(0).getSuccessors().get(0));
+        }else {
+	        while(i_indice_nodes!=nodes.size()-1) {
+	            Arc arc_tmp = null;
+	        	for(Arc var_arcs : nodes.get(i_indice_nodes).getSuccessors()) {
+	    			System.out.println("Node origin : "+nodes.get(i_indice_nodes)+ " needed "+nodes.get(i_indice_nodes+1));
+	        		if(var_arcs.getDestination().equals(nodes.get(i_indice_nodes+1))) {
+	        			System.out.println("Arc "+var_arcs.getOrigin()+" to "+var_arcs.getOrigin());
+	        			if(b_first) {
+	        				arc_tmp = var_arcs;
+	        				b_first = false;
+	        			}else {
+	        				if( var_arcs.getMinimumTravelTime() < arc_tmp.getMinimumTravelTime() ) {
+	        					System.out.println("Arc moins long de "+(arc_tmp.getMinimumTravelTime()-var_arcs.getMinimumTravelTime()));
+	        					arc_tmp = var_arcs;
+	        				}
+	        			}
+	        		}
+	        	}
+	    		System.out.println("Arc "+arc_tmp+" added.");
+	    		arcs.add(arc_tmp);
+	        	b_first = true;
+	        	i_indice_nodes++;
+	        }
+        }
+        System.out.println("Graph returned : " + graph.toString());
+        System.out.println("Arcs returned : " + arcs.toString());
         return new Path(graph, arcs);
     }
 
@@ -104,8 +154,7 @@ public class Path {
     private final List<Arc> arcs;
 
     /**
-     * Create an empty path corresponding to the given graph.
-     * 
+     * Create an empty path corresponding to the given graph.     * 
      * @param graph Graph containing the path.
      */
     public Path(Graph graph) {
@@ -209,12 +258,13 @@ public class Path {
      * Compute the length of this path (in meters).
      * 
      * @return Total length of the path (in meters).
-     * 
-     * @deprecated Need to be implemented.
      */
     public float getLength() {
-        // TODO:
-        return 0;
+    	float f_cpt_length = 0;
+        for(int i = 0 ; i < arcs.size() ; i++) {
+        	f_cpt_length = f_cpt_length + arcs.get(i).getLength();
+        }
+        return f_cpt_length;
     }
 
     /**
@@ -237,12 +287,14 @@ public class Path {
      * on every arc.
      * 
      * @return Minimum travel time to travel this path (in seconds).
-     * 
-     * @deprecated Need to be implemented.
      */
     public double getMinimumTravelTime() {
-        // TODO:
-        return 0;
+    	double d_travel_time = 0;
+        for(int i = 0; i < arcs.size() ; i++) {
+        	d_travel_time = d_travel_time + arcs.get(i).getMinimumTravelTime();
+        }
+        return d_travel_time;
     }
 
 }
+
