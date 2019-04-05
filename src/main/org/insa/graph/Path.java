@@ -35,62 +35,57 @@ public class Path {
 	 */
 	public static Path createFastestPathFromNodes(Graph graph, List<Node> nodes) throws IllegalArgumentException {
 		List<Arc> arcs = new ArrayList<Arc>();
-
 		boolean b_contains = true;
-
+		int j = 0;
+		boolean trouve = false;
+		if (nodes.size() != 1) {
+			for (j = 0; j < nodes.size() - 1; j++) {
+				for (Arc var_arc : nodes.get(j).getSuccessors()) {
+					if (var_arc.getDestination().equals((nodes.get(j + 1)))) {
+						trouve = true;
+					}
+				}
+				if (!trouve) {
+					throw new IllegalArgumentException("path invalid");
+				}
+				trouve = false;
+			}
+		}
 		for (Node var_node : nodes) {
-			System.out.println("Node : " + var_node);
 			if (!graph.getNodes().contains(var_node)) {
 				b_contains = false;
 			}
 		}
-
 		if (!b_contains) {
-			System.out.println("Some nodes are not in the graph.");
 			throw new IllegalArgumentException();
-		} else {
-			System.out.println("Every nodes are in the graph.");
 		}
 
 		int i_indice_nodes = 0;
 		boolean b_first = true;
-		if (nodes.size() == 0) {
-			// do nothing
-		} else if (nodes.size() == 1) {
-			arcs.add(nodes.get(i_indice_nodes).getSuccessors().get(0));
-		} else {
+		if (nodes.size() == 1) {
+			return new Path(graph,nodes.get(0));
+		} else if (nodes.size() > 1) {
 			while (i_indice_nodes != nodes.size() - 1) {
-				System.out.println("Indice nodes : " + i_indice_nodes);
-				System.out.println("Number successor : " + nodes.get(i_indice_nodes).getSuccessors().size());
 				Arc arc_tmp = null;
 				if (nodes.get(i_indice_nodes).getSuccessors().size() != 0) {
 					for (Arc var_arcs : nodes.get(i_indice_nodes).getSuccessors()) {
-						System.out.println("Node origin : " + nodes.get(i_indice_nodes) + " needed "
-								+ nodes.get(i_indice_nodes + 1));
 						if (var_arcs.getDestination().equals(nodes.get(i_indice_nodes + 1))) {
-							System.out.println("Arc " + var_arcs.getOrigin() + " to " + var_arcs.getOrigin());
 							if (b_first) {
 								arc_tmp = var_arcs;
 								b_first = false;
 							} else {
 								if (var_arcs.getMinimumTravelTime() < arc_tmp.getMinimumTravelTime()) {
-									System.out.println("Arc moins long de "
-											+ (arc_tmp.getMinimumTravelTime() - var_arcs.getMinimumTravelTime()));
 									arc_tmp = var_arcs;
 								}
 							}
 						}
 					}
-					System.out.println("Arc " + arc_tmp + " added.");
 					arcs.add(arc_tmp);
 					b_first = true;
 					i_indice_nodes++;
 				}
 			}
 		}
-
-		System.out.println("Graph returned : " + graph.toString());
-		System.out.println("Arcs returned : " + arcs.toString());
 		return new Path(graph, arcs);
 	}
 
@@ -111,47 +106,29 @@ public class Path {
 	 */
 	public static Path createShortestPathFromNodes(Graph graph, List<Node> nodes) throws IllegalArgumentException {
 		List<Arc> arcs = new ArrayList<Arc>();
-		System.out.println("____NEW CALL____");
-
 		boolean b_contains = true;
 		int j = 0;
 		boolean trouve = false;
-		System.out.println(nodes.size());
-		if (nodes.size() == 1) {
-			//throw new IllegalArgumentException("path invalid");
-		} else {
+		if (nodes.size() != 1) {
 			for (j = 0; j < nodes.size() - 1; j++) {
 				for (Arc var_arc : nodes.get(j).getSuccessors()) {
-					System.out.println(var_arc.getDestination().toString());
-					System.out.println(nodes.get(j + 1));
-
 					if (var_arc.getDestination().equals((nodes.get(j + 1)))) {
 						trouve = true;
 					}
-					System.out.println(trouve);
 				}
 				if (!trouve) {
 					throw new IllegalArgumentException("path invalid");
 				}
 				trouve = false;
-
-				System.out.println("___");
-
 			}
 		}
-
 		for (Node var_node : nodes) {
-			System.out.println("Node : " + var_node);
 			if (!graph.getNodes().contains(var_node)) {
 				b_contains = false;
 			}
 		}
-
 		if (!b_contains) {
-			System.out.println("Some nodes are not in the graph.");
 			throw new IllegalArgumentException();
-		} else {
-			System.out.println("Every nodes are in the graph.");
 		}
 
 		int i_indice_nodes = 0;
@@ -160,28 +137,20 @@ public class Path {
 			return new Path(graph,nodes.get(0));
 		} else if (nodes.size() > 1) {
 			while (i_indice_nodes != nodes.size() - 1) {
-				System.out.println("Indice nodes : " + i_indice_nodes);
-				System.out.println("Number successor : " + nodes.get(i_indice_nodes).getSuccessors().size());
 				Arc arc_tmp = null;
 				if (nodes.get(i_indice_nodes).getSuccessors().size() != 0) {
 					for (Arc var_arcs : nodes.get(i_indice_nodes).getSuccessors()) {
-						System.out.println("Node origin : " + nodes.get(i_indice_nodes) + " needed "
-								+ nodes.get(i_indice_nodes + 1));
 						if (var_arcs.getDestination().equals(nodes.get(i_indice_nodes + 1))) {
-							System.out.println("Arc " + var_arcs.getOrigin() + " to " + var_arcs.getOrigin());
 							if (b_first) {
 								arc_tmp = var_arcs;
 								b_first = false;
 							} else {
 								if (var_arcs.getLength() < arc_tmp.getLength()) {
-									System.out.println("Arc moins long (en metres)  de "
-											+ (arc_tmp.getLength() - var_arcs.getLength()));
 									arc_tmp = var_arcs;
 								}
 							}
 						}
 					}
-					System.out.println("Arc " + arc_tmp + " added.");
 					arcs.add(arc_tmp);
 					b_first = true;
 					i_indice_nodes++;
