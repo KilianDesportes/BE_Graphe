@@ -181,7 +181,7 @@ public class PathTest {
         // Trap construction!
         path = Path.createFastestPathFromNodes(graph, Arrays.asList(new Node[] { nodes[1] }));
         assertEquals(nodes[1], path.getOrigin());
-        assertEquals(0, path.getArcs().size());
+        assertEquals(0, path.getArcs().size()); // Size = 0, problème avec le assert au dessus qui dit qu'il ya une origine
 
         // Trap construction - The return!
         path = Path.createFastestPathFromNodes(graph, Arrays.asList(new Node[0]));
