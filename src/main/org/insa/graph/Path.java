@@ -138,7 +138,6 @@ public class Path {
 				trouve = false;
 
 				System.out.println("___");
-
 			}
 		}
 
