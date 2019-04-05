@@ -189,7 +189,7 @@ public class PathTest {
         assertEquals(0, path.getArcs().size());
         assertTrue(path.isEmpty());
     }
-
+    
     @Test
     public void testCreateShortestPathFromNodes() {
         Path path;
