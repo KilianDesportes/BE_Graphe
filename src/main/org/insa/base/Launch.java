@@ -51,8 +51,7 @@ public class Launch {
         String pathName = "/home/kde/Documents/paths/path_fr31insa_rangueil_r2.path";
 
         // Create a graph reader.
-        GraphReader reader = new BinaryGraphReader(
-                new DataInputStream(new BufferedInputStream(new FileInputStream(mapName))));
+        GraphReader reader = new BinaryGraphReader(new DataInputStream(new BufferedInputStream(new FileInputStream(mapName))));
         
         Graph graph = reader.read();
 

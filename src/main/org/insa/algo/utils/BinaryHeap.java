@@ -225,5 +225,4 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
         System.out.println("--------  End of heap  --------");
         System.out.println();
     }
-
 }
