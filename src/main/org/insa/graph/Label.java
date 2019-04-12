@@ -1,5 +1,6 @@
 package org.insa.graph;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class Label {
@@ -91,7 +92,7 @@ public class Label {
 		this.pere = pere;
 	}
 	
-	public ArrayList<Label> InitGraphNode(ArrayList<Node> ar)
+	static public ArrayList<Label> InitGraphNode(List<Node> ar)
 	{
 		ArrayList<Label> newAr = new ArrayList<Label>();
 		int i;
