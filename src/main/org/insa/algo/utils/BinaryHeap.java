@@ -153,6 +153,12 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
     	if(isEmpty()) {
     		throw new ElementNotFoundException(x);
     	}else {
+    		if(!this.array.contains(x))
+    		{
+    			System.out.println("Element non existant");
+    			throw new ElementNotFoundException(x);
+    		}
+    		this.array.remove(x);
     		for(int i = 0 ; i < this.array.size() ; i++) {
     			if(this.array.get(i).equals(x)) {
     				System.out.println("Element existant");
@@ -160,12 +166,9 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
     				index_elem = i;
     			}
     		}
-    		if(!b_element_found) {
-    			System.out.println("Element non existant");
-    			throw new ElementNotFoundException(x);
-    		}else {
-    			//this.array.set(index_elem, this.array.get();
-    		}
+    		
+    		//this.array.set(index_elem, this.array.get();
+   
     	}
         int index = this.currentSize--;
     }
