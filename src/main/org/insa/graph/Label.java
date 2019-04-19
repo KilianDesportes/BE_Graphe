@@ -98,15 +98,7 @@ public class Label {
 		int i;
 		for(i=0;i<ar.size();i++)
 		{
-			if(i==0)
-			{
-				newAr.add(new Label(ar.get(i),true));
-			}
-			else
-			{
-				newAr.add(new Label(ar.get(i)));
-			}
-			
+			newAr.add(new Label(ar.get(i)));
 		}
 		return newAr;
 	}

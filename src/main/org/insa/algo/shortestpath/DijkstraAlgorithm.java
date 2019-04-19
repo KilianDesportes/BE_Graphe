@@ -31,6 +31,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		BinaryHeap<Node> bh_tas = new BinaryHeap<Node>();
 
 		bh_tas.insert(origin_node);
+		
+		al_Labels.get(al_Nodes.indexOf(origin_node)).setCoût(0);
 
 		int nb_nodes_unmarqued = al_Nodes.size();
 
@@ -43,55 +45,70 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 			Node node_temp = bh_tas.findMin();
 			bh_tas.deleteMin();
 			System.out.println("findMin result is " + node_temp);
-			System.out.println("Position on the node list " + al_Nodes.indexOf(node_temp));
 			System.out.println("Label " + al_Labels.get(al_Nodes.indexOf(node_temp)));
 
 			al_Labels.get(al_Nodes.indexOf(node_temp)).setMarque(true);
+						
 			nb_nodes_unmarqued--;
 			System.out.println(al_Labels.get(al_Nodes.indexOf(node_temp)) + " set to true");
 			System.out.println("Nb unmarqued nodes " + nb_nodes_unmarqued);
 			for (int i = 0; i < node_temp.getNumberOfSuccessors(); i++) {
 
 //				try {
-//					Thread.sleep(500);
+//					Thread.sleep(50);
 //				} catch (InterruptedException e) {
 //					e.printStackTrace();
 //				}
 
 				System.out.println("____________FOR ITER____________");
 				System.out.println("Successor " + i + "/" + node_temp.getNumberOfSuccessors());
+				
 				Arc arc_node = node_temp.getSuccessors().get(i);
 				System.out.println("Arc is " + arc_node);
 				System.out.println("Arc origin is " + arc_node.getOrigin());
-				Node node = arc_node.getDestination();
-				System.out.println("Arc dest (node) is " + arc_node.getDestination());
-				Label lab_node = al_Labels.get(al_Nodes.indexOf(node));
-				System.out.println("The label of this node is " + lab_node);
-				System.out.println("Label current node " + lab_node.getSommet_courant());
-				System.out.println("Label current père " + lab_node.getPere());
-				System.out.println("Label current cout " + lab_node.getCoût());
-				System.out.println("Label marked " + lab_node.isMarque());
+				System.out.println("Arc dest is " + arc_node.getDestination());
 
-				if (lab_node.isMarque() == false) {
+				Node node = arc_node.getDestination();
+				
+				Label lab_node_dest = al_Labels.get(al_Nodes.indexOf(node));
+				System.out.println("DEST");
+				System.out.println("The label of this node is " + lab_node_dest);
+				System.out.println("Label current node " + lab_node_dest.getSommet_courant());
+				System.out.println("Label current père " + lab_node_dest.getPere());
+				System.out.println("Label current cout " + lab_node_dest.getCoût());
+				System.out.println("Label marked " + lab_node_dest.isMarque());
+				
+				Label lab_node_origin = al_Labels.get(al_Nodes.indexOf(arc_node.getOrigin()));
+				System.out.println("ORIGIN");
+				System.out.println("The label of this node is " + lab_node_origin);
+				System.out.println("Label current node " + lab_node_origin.getSommet_courant());
+				System.out.println("Label current père " + lab_node_origin.getPere());
+				System.out.println("Label current cout " + lab_node_origin.getCoût());
+				System.out.println("Label marked " + lab_node_origin.isMarque());
+				System.out.println("____");
+
+				if (lab_node_dest.isMarque() == false) {
 					
 					/*PRENDRE EN COMPTE LES AJOUTS DE COUTS AU FUR ET A MESURE DES 
 					 * ETAPES DE PARCOURS. PAS SEULEMENT COMPARAISON AU COUT DE L'ARC 
 					 * ACTUEL. GL 
 					 */
-					
-					
+	
 					System.out.println("Label non marqué");
-					System.out.println("Cout actuel label " + lab_node.getCoût());
+					System.out.println("Cout actuel label " + lab_node_dest.getCoût());
 					System.out.println("Cout de l'arc " + arc_node.getLength());
-					if (lab_node.getCoût() > (int) arc_node.getLength()) {
+					
+					int newCoutPotentiel = lab_node_origin.getCoût() + (int) arc_node.getLength();
+															
+					if (lab_node_dest.getCoût() > newCoutPotentiel) {
 						System.out.println("Cout inferieur");
-						System.out.println("Cout from " + lab_node.getCoût() + " to " + arc_node.getLength());
-						lab_node.setCoût((int) arc_node.getLength());
+						System.out.println("Cout from " + lab_node_dest.getCoût() + " to " + arc_node.getLength());
+						lab_node_dest.setCoût(newCoutPotentiel);
 						bh_tas.insert(node);
 						System.out.println("Père " + arc_node);
-						lab_node.setPere(arc_node);
+						lab_node_dest.setPere(arc_node);
 						changement_pere++;
-						System.out.println("Père label" + lab_node.getPere());
+						System.out.println("Père label" + lab_node_dest.getPere());
 					} else {
 						System.out.println("Cout supérieur");
 					}
