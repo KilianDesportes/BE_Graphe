@@ -3,7 +3,7 @@ package org.insa.graph;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Label {
+public class Label implements Comparable<Label> {
 	private Node sommet_courant;
 	private boolean marque;//True : cout min du sommet connu
 	private int coût;
@@ -101,6 +101,11 @@ public class Label {
 			newAr.add(new Label(ar.get(i)));
 		}
 		return newAr;
+	}
+
+	@Override
+	public int compareTo(Label o) {
+		return this.getCoût() - o.getCoût();
 	}
 	
 
