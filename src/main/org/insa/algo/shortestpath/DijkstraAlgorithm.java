@@ -35,9 +35,10 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		al_Labels.get(origin_node.getId()).setCoût(0);
 		al_Labels.get(origin_node.getId()).setSommet_courant(origin_node);
 
+        notifyOriginProcessed(data.getOrigin());
 
 		while (nbNodes_unmarqued != 0) {
-			
+						
 			Label label_temp = bh_tas.findMin();
 			bh_tas.deleteMin();
 
@@ -54,9 +55,11 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
 				if (lab_node_dest.isMarque() == false) {
 					
-					int newCoutPotentiel = lab_node_origin.getCoût() + (int) arc_node.getLength();
+					double newCoutPotentiel = lab_node_origin.getCoût() + data.getCost(arc_node);
 															
 					if (lab_node_dest.getCoût() > newCoutPotentiel) {
+						
+                        notifyNodeReached(arc_node.getDestination());
 						
 						lab_node_dest.setCoût(newCoutPotentiel);
 						lab_node_dest.setPere(arc_node);
@@ -82,7 +85,6 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
                 Node node_origin = arc.getOrigin();
                 Label label_origin = al_Labels.get(node_origin.getId());
                 arc = label_origin.getPere();
-                System.out.println(arc);
             }
 
             Collections.reverse(arcs);

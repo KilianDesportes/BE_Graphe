@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Label implements Comparable<Label> {
 	private Node sommet_courant;
 	private boolean marque;//True : cout min du sommet connu
-	private int coût;
+	private double coût;
 	private Arc pere;
 	
 	// Cas inf
@@ -14,7 +14,7 @@ public class Label implements Comparable<Label> {
 	{
 		this.sommet_courant = ps;
 		this.marque = false;
-		this.coût = Integer.MAX_VALUE;
+		this.coût = Double.MAX_VALUE;
 		this.pere = null;
 	}
 	
@@ -67,14 +67,14 @@ public class Label implements Comparable<Label> {
 	/**
 	 * @return the coût
 	 */
-	public int getCoût() {
+	public double getCoût() {
 		return coût;
 	}
 
 	/**
 	 * @param coût the coût to set
 	 */
-	public void setCoût(int coût) {
+	public void setCoût(double coût) {
 		this.coût = coût;
 	}
 
@@ -105,7 +105,7 @@ public class Label implements Comparable<Label> {
 
 	@Override
 	public int compareTo(Label o) {
-		return this.getCoût() - o.getCoût();
+		return (int)this.getCoût() - (int)o.getCoût();
 	}
 	
 
