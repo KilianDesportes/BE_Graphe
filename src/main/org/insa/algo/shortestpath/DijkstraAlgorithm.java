@@ -16,11 +16,13 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
 	@Override
 	protected ShortestPathSolution doRun() {
-		
+		boolean reached = false;
 		ShortestPathData data = getInputData();
 		ShortestPathSolution solution = null;
 
 		Node origin_node = data.getOrigin();
+		Node destination  = data.getDestination();
+		
 
 		List<Node> al_Nodes = data.getGraph().getNodes();
 		ArrayList<Label> al_Labels = Label.InitGraphNode(al_Nodes);
@@ -36,17 +38,20 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		al_Labels.get(origin_node.getId()).setSommet_courant(origin_node);
 
         notifyOriginProcessed(data.getOrigin());
-
-		while (nbNodes_unmarqued != 0) {
-						
+        int nbIteration = 0;
+		while (nbNodes_unmarqued != 0 && reached == false) {
+			System.out.println("Nombre d'itération : "+nbIteration);
+			nbIteration ++;
 			Label label_temp = bh_tas.findMin();
 			bh_tas.deleteMin();
 
 			label_temp.setMarque(true);
+			System.out.println("Cout des labels marques :"+label_temp.getCoût());
+			System.out.println("Taille du tas (debut): "+bh_tas.size());
 			nbNodes_unmarqued--;
 			
-			for (int i = 0; i < label_temp.getSommet_courant().getNumberOfSuccessors(); i++) {
-
+			System.out.println("Nombre de successeurs testés : "+label_temp.getSommet_courant().getNumberOfSuccessors());
+			for (int i = 0; i < label_temp.getSommet_courant().getNumberOfSuccessors(); i++) {	
 				Arc arc_node = label_temp.getSommet_courant().getSuccessors().get(i);
 				Node node = arc_node.getDestination();
 				Label lab_node_dest = al_Labels.get(node.getId());
@@ -60,15 +65,16 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 					if (lab_node_dest.getCoût() > newCoutPotentiel) {
 						
                         notifyNodeReached(arc_node.getDestination());
-						
+						if(arc_node.getDestination() == destination) {
+							reached = true;
+						}
 						lab_node_dest.setCoût(newCoutPotentiel);
 						lab_node_dest.setPere(arc_node);
 						bh_tas.insert(lab_node_dest);
-
 					}
-
 				} 
 			}
+			System.out.println("Taille du tas (fin): "+bh_tas.size());
 		}
 		
         if (al_Labels.get(data.getDestination().getId()) == null) {
@@ -88,8 +94,18 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             }
 
             Collections.reverse(arcs);
-
-            solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));
+            System.out.println("Nombre d'arc du plus cours chemin : "+ arcs.size());
+            Path p = new Path(graph, arcs);
+            System.out.println("Path travel time is " + p.getMinimumTravelTime()/60.0 + " min");
+            System.out.println("Path lengths is " + p.getLength()/1000.0 + " km");
+            if(p.isValid()) {
+            	System.out.println("Path is valid");
+                solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));
+            }else {
+            	System.out.println("Path not valid");
+            	solution = null;
+            	
+            }
         }
 
 		return solution;
