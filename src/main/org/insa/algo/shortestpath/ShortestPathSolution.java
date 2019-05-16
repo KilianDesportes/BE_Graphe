@@ -73,6 +73,7 @@ public class ShortestPathSolution extends AbstractSolution {
                 info = String.format("%s, %.4f minutes", info, cost / 60.0);
             }
         }
+        System.out.println(info);
         info += " in " + getSolvingTime().getSeconds() + " seconds.";
         return info;
     }

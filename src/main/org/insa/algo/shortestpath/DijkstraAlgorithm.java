@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.insa.algo.AbstractSolution.Status;
 import org.insa.algo.utils.BinaryHeap;
+import org.insa.algo.utils.EmptyPriorityQueueException;
 import org.insa.graph.*;
 
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
@@ -39,45 +40,60 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
         notifyOriginProcessed(data.getOrigin());
         int nbIteration = 0;
-		while (nbNodes_unmarqued != 0 && reached == false) {
-			System.out.println("Nombre d'itération : "+nbIteration);
-			nbIteration ++;
-			Label label_temp = bh_tas.findMin();
-			bh_tas.deleteMin();
-
-			label_temp.setMarque(true);
-			System.out.println("Cout des labels marques :"+label_temp.getCoût());
-			System.out.println("Taille du tas (debut): "+bh_tas.size());
-			nbNodes_unmarqued--;
-			
-			System.out.println("Nombre de successeurs testés : "+label_temp.getSommet_courant().getNumberOfSuccessors());
-			for (int i = 0; i < label_temp.getSommet_courant().getNumberOfSuccessors(); i++) {	
-				Arc arc_node = label_temp.getSommet_courant().getSuccessors().get(i);
-				Node node = arc_node.getDestination();
-				Label lab_node_dest = al_Labels.get(node.getId());
-				lab_node_dest.setSommet_courant(node);
-				Label lab_node_origin = al_Labels.get(arc_node.getOrigin().getId());
-
-				if (lab_node_dest.isMarque() == false) {
+        boolean impossible = false;
+        if(origin_node.getId() == destination.getId()) {
+        	impossible = true;
+        }else {
+			while (nbNodes_unmarqued != 0 && reached == false) {
+				System.out.println("Nombre d'itération : "+nbIteration);
+				nbIteration ++;
+				Label label_temp = null;
+				try {
+					label_temp = bh_tas.findMin();
+				}catch (EmptyPriorityQueueException e) {
+					reached = true;
+					impossible = true;
+				}
+				if(reached == false) {
+					bh_tas.deleteMin();
+	
+					label_temp.setMarque(true);
+					System.out.println("Cout des labels marques :"+label_temp.getCoût());
+					System.out.println("Taille du tas (debut): "+bh_tas.size());
+					nbNodes_unmarqued--;
 					
-					double newCoutPotentiel = lab_node_origin.getCoût() + data.getCost(arc_node);
-															
-					if (lab_node_dest.getCoût() > newCoutPotentiel) {
-						
-                        notifyNodeReached(arc_node.getDestination());
-						if(arc_node.getDestination() == destination) {
-							reached = true;
-						}
-						lab_node_dest.setCoût(newCoutPotentiel);
-						lab_node_dest.setPere(arc_node);
-						bh_tas.insert(lab_node_dest);
+					System.out.println("Nombre de successeurs testés : "+label_temp.getSommet_courant().getNumberOfSuccessors());
+					for (int i = 0; i < label_temp.getSommet_courant().getNumberOfSuccessors(); i++) {	
+						Arc arc_node = label_temp.getSommet_courant().getSuccessors().get(i);
+						Node node = arc_node.getDestination();
+						Label lab_node_dest = al_Labels.get(node.getId());
+						lab_node_dest.setSommet_courant(node);
+						Label lab_node_origin = al_Labels.get(arc_node.getOrigin().getId());
+	
+						if (lab_node_dest.isMarque() == false) {
+							
+							double newCoutPotentiel = lab_node_origin.getCoût() + data.getCost(arc_node);
+																	
+							if (lab_node_dest.getCoût() > newCoutPotentiel) {
+								
+		                        notifyNodeReached(arc_node.getDestination());
+								if(arc_node.getDestination() == destination) {
+									reached = true;
+								}
+								lab_node_dest.setCoût(newCoutPotentiel);
+								lab_node_dest.setPere(arc_node);
+								bh_tas.insert(lab_node_dest);
+							}
+						} 
 					}
-				} 
+				}
 			}
 			System.out.println("Taille du tas (fin): "+bh_tas.size());
 		}
 		
         if (al_Labels.get(data.getDestination().getId()) == null) {
+            solution = new ShortestPathSolution(data, Status.INFEASIBLE);
+        }else if(impossible == true) {
             solution = new ShortestPathSolution(data, Status.INFEASIBLE);
         }
         else {
