@@ -31,9 +31,10 @@ import org.junit.Test;
 
 public class ShortPathTest {
         
-    private static ShortestPathData impossible_path,null_path,possible_path;
+    private static ShortestPathData impossible_path,null_path,shortest_possible_path,shortest_possible_path_car,
+    	fastest_possible_path,fastest_possible_path_pedestrian,fastest_possible_path_car;
     
-
+    
     @BeforeClass
     public static void initAll() throws IOException {
     	
@@ -46,11 +47,23 @@ public class ShortPathTest {
         
         System.out.println(ArcInsp);
         
-        impossible_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(15418),ArcInsp.get(0));
-                
+        for(int i =0 ;i < 5 ; i ++){
+            System.out.println(ArcInsp.get(i));
+
+        }
+
+        
+        
+        impossible_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(15418),ArcInsp.get(0));               
         null_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21361),ArcInsp.get(0));
         
-        possible_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21201),ArcInsp.get(0));
+        shortest_possible_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21201),ArcInsp.get(0));
+        shortest_possible_path_car = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21201),ArcInsp.get(1));
+        fastest_possible_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21201),ArcInsp.get(2));
+        fastest_possible_path_car = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21201),ArcInsp.get(3));
+        fastest_possible_path_pedestrian = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21201),ArcInsp.get(4));
+
+
 
     }
     
@@ -69,16 +82,56 @@ public class ShortPathTest {
     }
     
     @Test
-    public void testDjikstraAlgorithmPath() {
-    	assertTrue(new DijkstraAlgorithm(possible_path).run().isFeasible());
-        assertEquals((int)new DijkstraAlgorithm(possible_path).run().getPath().getLength(),
-        		(int)new BellmanFordAlgorithm(possible_path).run().getPath().getLength());
-        assertEquals((int)new DijkstraAlgorithm(possible_path).run().getPath().getTravelTime(100),
-        		(int)new BellmanFordAlgorithm(possible_path).run().getPath().getTravelTime(100));
-        assertEquals((int)new DijkstraAlgorithm(possible_path).run().getPath().getMinimumTravelTime(),
-        		(int)new BellmanFordAlgorithm(possible_path).run().getPath().getMinimumTravelTime());
+    public void testDjikstraAlgorithmShortestPath() {
+    	assertTrue(new DijkstraAlgorithm(shortest_possible_path).run().isFeasible());
+        assertEquals((int)new DijkstraAlgorithm(shortest_possible_path).run().getPath().getLength(),
+        		(int)new BellmanFordAlgorithm(shortest_possible_path).run().getPath().getLength());
+        assertEquals((int)new DijkstraAlgorithm(shortest_possible_path).run().getPath().getMinimumTravelTime(),
+        		(int)new BellmanFordAlgorithm(shortest_possible_path).run().getPath().getMinimumTravelTime());
         
     }
-
+    
+    @Test
+    public void testDjikstraAlgorithmShortestPathCar() {
+    	assertTrue(new DijkstraAlgorithm(shortest_possible_path_car).run().isFeasible());
+        assertEquals((int)new DijkstraAlgorithm(shortest_possible_path_car).run().getPath().getLength(),
+        		(int)new BellmanFordAlgorithm(shortest_possible_path_car).run().getPath().getLength());
+        assertEquals((int)new DijkstraAlgorithm(shortest_possible_path_car).run().getPath().getMinimumTravelTime(),
+        		(int)new BellmanFordAlgorithm(shortest_possible_path_car).run().getPath().getMinimumTravelTime());
+        
+    }
+    
+    @Test
+    public void testDjikstraAlgorithmFastestPath() {
+    	assertTrue(new DijkstraAlgorithm(fastest_possible_path).run().isFeasible());
+        assertEquals((int)new DijkstraAlgorithm(fastest_possible_path).run().getPath().getLength(),
+        		(int)new BellmanFordAlgorithm(fastest_possible_path).run().getPath().getLength());
+        assertEquals((int)new DijkstraAlgorithm(fastest_possible_path).run().getPath().getMinimumTravelTime(),
+        		(int)new BellmanFordAlgorithm(fastest_possible_path).run().getPath().getMinimumTravelTime());
+        
+    }
+    
+    @Test
+    public void testDjikstraAlgorithmFastestPathCar() {
+    	assertTrue(new DijkstraAlgorithm(fastest_possible_path_car).run().isFeasible());
+        assertEquals((int)new DijkstraAlgorithm(fastest_possible_path_car).run().getPath().getLength(),
+        		(int)new BellmanFordAlgorithm(fastest_possible_path_car).run().getPath().getLength());
+        assertEquals((int)new DijkstraAlgorithm(fastest_possible_path_car).run().getPath().getMinimumTravelTime(),
+        		(int)new BellmanFordAlgorithm(fastest_possible_path_car).run().getPath().getMinimumTravelTime());
+        
+    }
+    
+    @Test
+    public void testDjikstraAlgorithmFastestPathPedestrian() {
+    	assertTrue(new DijkstraAlgorithm(fastest_possible_path_pedestrian).run().isFeasible());
+        assertEquals((int)new DijkstraAlgorithm(fastest_possible_path_pedestrian).run().getPath().getLength(),
+        		(int)new BellmanFordAlgorithm(fastest_possible_path_pedestrian).run().getPath().getLength());
+        assertEquals((int)new DijkstraAlgorithm(fastest_possible_path_pedestrian).run().getPath().getMinimumTravelTime(),
+        		(int)new BellmanFordAlgorithm(fastest_possible_path_pedestrian).run().getPath().getMinimumTravelTime());
+        
+    }
+    
+    //Faire des inégalités (Chemin le moins long moins rapide que le plus rapide et inversement).
+	
 
 }

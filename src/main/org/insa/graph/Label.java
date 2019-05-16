@@ -26,15 +26,6 @@ public class Label implements Comparable<Label> {
 		this.coût = 0;
 		this.pere = null;
 	}
-	
-	//Autre cas
-	/*public Label(Node ps, boolean m, int c, Arc p)
-	{
-		this.sommet_courant = ps;
-		this.marque = m;
-		this.coût = c;
-		this.pere = p;
-	}*/
 
 	/**
 	 * @return the sommet_courant
