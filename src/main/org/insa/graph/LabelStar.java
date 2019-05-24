@@ -3,6 +3,9 @@ package org.insa.graph;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.insa.algo.AbstractInputData.Mode;
+import org.insa.algo.shortestpath.ShortestPathData;
+
 public class LabelStar extends Label{
 	
 	private double cout_destination;	
@@ -18,8 +21,14 @@ public class LabelStar extends Label{
 	}
 
 
-	public void setCout_destination(double cout_destination) {
-		this.cout_destination = cout_destination;
+	public void setCout_destination(double cout_destination, ShortestPathData data) {
+		if (data.getMode() == Mode.LENGTH) {
+			this.cout_destination = Point.distance(this.getSommet_courant().getPoint(),data.getDestination().getPoint());
+		}
+		else {
+			int vitesse = Math.max(data.getMaximumSpeed(), data.getGraph().getGraphInformation().getMaximumSpeed());
+			this.cout_destination = Point.distance(this.getSommet_courant().getPoint(),data.getDestination().getPoint())/(vitesse/3.6);
+		}
 	}
 
 	
