@@ -45,7 +45,6 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	impossible = true;
         }else {
 			while (nbNodes_unmarqued != 0 && reached == false) {
-				System.out.println("Nombre d'itération : "+nbIteration);
 				nbIteration ++;
 				Label label_temp = null;
 				try {
@@ -58,11 +57,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 					bh_tas.deleteMin();
 	
 					label_temp.setMarque(true);
-					System.out.println("Cout des labels marques :"+label_temp.getCoût());
-					System.out.println("Taille du tas (debut): "+bh_tas.size());
 					nbNodes_unmarqued--;
 					
-					System.out.println("Nombre de successeurs testés : "+label_temp.getSommet_courant().getNumberOfSuccessors());
 					for (int i = 0; i < label_temp.getSommet_courant().getNumberOfSuccessors(); i++) {	
 						Arc arc_node = label_temp.getSommet_courant().getSuccessors().get(i);
 						Node node = arc_node.getDestination();
@@ -88,7 +84,6 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 					}
 				}
 			}
-			System.out.println("Taille du tas (fin): "+bh_tas.size());
 		}
 		
         if (al_Labels.get(data.getDestination().getId()) == null) {
@@ -110,15 +105,10 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             }
 
             Collections.reverse(arcs);
-            System.out.println("Nombre d'arc du plus cours chemin : "+ arcs.size());
             Path p = new Path(graph, arcs);
-            System.out.println("Path travel time is " + p.getMinimumTravelTime()/60.0 + " min");
-            System.out.println("Path lengths is " + p.getLength()/1000.0 + " km");
             if(p.isValid()) {
-            	System.out.println("Path is valid");
                 solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));
             }else {
-            	System.out.println("Path not valid");
             	solution = null;
             	
             }

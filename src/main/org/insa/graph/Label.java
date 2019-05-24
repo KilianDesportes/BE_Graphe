@@ -93,10 +93,18 @@ public class Label implements Comparable<Label> {
 		}
 		return newAr;
 	}
+	
+	public double getTotalCost() {
+		return this.getCoût();
+	}
 
 	@Override
 	public int compareTo(Label o) {
-		return (int)this.getCoût() - (int)o.getCoût();
+		double cost = this.getTotalCost() - o.getTotalCost();;
+		if(cost==0) {
+			cost = (this.getTotalCost()-this.getCoût()) - (o.getTotalCost()-o.getCoût());
+		}
+		return (int)cost;
 	}
 	
 

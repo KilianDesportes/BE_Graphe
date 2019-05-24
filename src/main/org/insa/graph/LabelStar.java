@@ -1,27 +1,17 @@
 package org.insa.graph;
 
-public class LabelStar extends Label {
+import java.util.ArrayList;
+import java.util.List;
+
+public class LabelStar extends Label{
 	
-	private Node sommet_courant;
-	private boolean marque;
-	private double cout_origine;
-	private double cout_destination;
-	private Arc pere;
-	
+	private double cout_destination;	
 
 	public LabelStar(Node ps) {
 		super(ps);
+		this.cout_destination = Double.MAX_VALUE;
 	}
 	
-	public double getCout_origine() {
-		return cout_origine;
-	}
-
-
-	public void setCout_origine(double cout_origine) {
-		this.cout_origine = cout_origine;
-	}
-
 
 	public double getCout_destination() {
 		return cout_destination;
@@ -32,28 +22,19 @@ public class LabelStar extends Label {
 		this.cout_destination = cout_destination;
 	}
 
-	public Node getSommet_courant() {
-		return sommet_courant;
+	
+	public double getTotalCost() {
+		return this.getCout_destination() + this.getCoût();
 	}
-
-	public void setSommet_courant(Node sommet_courant) {
-		this.sommet_courant = sommet_courant;
+	
+	static public ArrayList<LabelStar> InitGraphNodeAStar(List<Node> ar)
+	{
+		ArrayList<LabelStar> newAr = new ArrayList<LabelStar>();
+		int i;
+		for(i=0;i<ar.size();i++)
+		{
+			newAr.add(new LabelStar(ar.get(i)));
+		}
+		return newAr;
 	}
-
-	public boolean isMarque() {
-		return marque;
-	}
-
-	public void setMarque(boolean marque) {
-		this.marque = marque;
-	}
-
-	public Arc getPere() {
-		return pere;
-	}
-
-	public void setPere(Arc pere) {
-		this.pere = pere;
-	}
-
 }

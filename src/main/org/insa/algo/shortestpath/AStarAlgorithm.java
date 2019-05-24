@@ -10,6 +10,7 @@ import org.insa.algo.utils.EmptyPriorityQueueException;
 import org.insa.graph.Arc;
 import org.insa.graph.Graph;
 import org.insa.graph.Label;
+import org.insa.graph.LabelStar;
 import org.insa.graph.Node;
 import org.insa.graph.Path;
 
@@ -30,7 +31,7 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
 		
 
 		List<Node> al_Nodes = data.getGraph().getNodes();
-		ArrayList<Label> al_Labels = Label.InitGraphNode(al_Nodes);
+		ArrayList<LabelStar> al_Labels = LabelStar.InitGraphNodeAStar(al_Nodes);
 		
 		Graph graph = data.getGraph();
 	    final int nbNodes = graph.size();
@@ -40,6 +41,8 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
 
 		bh_tas.insert(al_Labels.get(origin_node.getId()));		
 		al_Labels.get(origin_node.getId()).setCoût(0);
+		double cout_dest = origin_node.getPoint().distanceTo(destination.getPoint());
+		al_Labels.get(origin_node.getId()).setCout_destination(cout_dest);
 		al_Labels.get(origin_node.getId()).setSommet_courant(origin_node);
 
         notifyOriginProcessed(data.getOrigin());
@@ -49,7 +52,6 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
         	impossible = true;
         }else {
 			while (nbNodes_unmarqued != 0 && reached == false) {
-				System.out.println("Nombre d'itération : "+nbIteration);
 				nbIteration ++;
 				Label label_temp = null;
 				try {
@@ -62,17 +64,19 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
 					bh_tas.deleteMin();
 	
 					label_temp.setMarque(true);
-					System.out.println("Cout des labels marques :"+label_temp.getCoût());
-					System.out.println("Taille du tas (debut): "+bh_tas.size());
 					nbNodes_unmarqued--;
 					
-					System.out.println("Nombre de successeurs testés : "+label_temp.getSommet_courant().getNumberOfSuccessors());
 					for (int i = 0; i < label_temp.getSommet_courant().getNumberOfSuccessors(); i++) {	
 						Arc arc_node = label_temp.getSommet_courant().getSuccessors().get(i);
 						Node node = arc_node.getDestination();
-						Label lab_node_dest = al_Labels.get(node.getId());
+						LabelStar lab_node_dest = al_Labels.get(node.getId());
+						if(lab_node_dest.getCoût() == Double.MAX_VALUE) {
+							System.out.println("Mise a jour cout dest");
+							lab_node_dest.setCout_destination(node.getPoint().distanceTo(destination.getPoint()));
+							System.out.println(node.getPoint().distanceTo(destination.getPoint()));
+						}
 						lab_node_dest.setSommet_courant(node);
-						Label lab_node_origin = al_Labels.get(arc_node.getOrigin().getId());
+						LabelStar lab_node_origin = al_Labels.get(arc_node.getOrigin().getId());
 	
 						if (lab_node_dest.isMarque() == false) {
 							
@@ -92,7 +96,6 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
 					}
 				}
 			}
-			System.out.println("Taille du tas (fin): "+bh_tas.size());
 		}
 		
         if (al_Labels.get(data.getDestination().getId()) == null) {
@@ -109,20 +112,15 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
             while (arc != null) {
                 arcs.add(arc);
                 Node node_origin = arc.getOrigin();
-                Label label_origin = al_Labels.get(node_origin.getId());
+                LabelStar label_origin = al_Labels.get(node_origin.getId());
                 arc = label_origin.getPere();
             }
 
             Collections.reverse(arcs);
-            System.out.println("Nombre d'arc du plus cours chemin : "+ arcs.size());
             Path p = new Path(graph, arcs);
-            System.out.println("Path travel time is " + p.getMinimumTravelTime()/60.0 + " min");
-            System.out.println("Path lengths is " + p.getLength()/1000.0 + " km");
             if(p.isValid()) {
-            	System.out.println("Path is valid");
                 solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));
             }else {
-            	System.out.println("Path not valid");
             	solution = null;
             	
             }
