@@ -62,9 +62,6 @@ public class ShortPathTest {
         fastest_possible_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21201),ArcInsp.get(2));
         fastest_possible_path_car = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21201),ArcInsp.get(3));
         fastest_possible_path_pedestrian = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21201),ArcInsp.get(4));
-
-
-
     }
     
     @Test
@@ -132,6 +129,9 @@ public class ShortPathTest {
     }
     
     //Faire des inégalités (Chemin le moins long moins rapide que le plus rapide et inversement).
-	
-
+    @Test
+    public void testDjikstraAlgorithmFastestPathVsShortestPath() {
+    	assertTrue(new DijkstraAlgorithm(shortest_possible_path).run().getPath().getLength()<new DijkstraAlgorithm(fastest_possible_path).run().getPath().getLength());
+    	assertTrue(new DijkstraAlgorithm(shortest_possible_path).run().getPath().getMinimumTravelTime()>new DijkstraAlgorithm(fastest_possible_path).run().getPath().getMinimumTravelTime());
+    }
 }
