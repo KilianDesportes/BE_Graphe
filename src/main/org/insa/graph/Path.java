@@ -348,7 +348,6 @@ public class Path {
 	 * 
 	 */
 	public double getTravelTime(double speed) {
-		// TODO:
 		double time = 0;
 		int i;
 		Arc arcTemp;

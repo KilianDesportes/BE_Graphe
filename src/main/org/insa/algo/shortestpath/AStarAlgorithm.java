@@ -51,7 +51,7 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
         if(origin_node.getId() == destination.getId()) {
         	impossible = true;
         }else {
-			while (nbNodes_unmarqued != 0 && reached == false) {
+			while (!bh_tas.isEmpty() && reached == false) {
 				nbIteration ++;
 				Label label_temp = null;
 				try {
@@ -64,7 +64,6 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
 					bh_tas.deleteMin();
 	
 					label_temp.setMarque(true);
-					nbNodes_unmarqued--;
 					
 					for (int i = 0; i < label_temp.getSommet_courant().getNumberOfSuccessors(); i++) {	
 						Arc arc_node = label_temp.getSommet_courant().getSuccessors().get(i);

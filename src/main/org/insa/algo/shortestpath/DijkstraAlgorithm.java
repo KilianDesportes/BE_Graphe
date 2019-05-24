@@ -44,7 +44,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         if(origin_node.getId() == destination.getId()) {
         	impossible = true;
         }else {
-			while (nbNodes_unmarqued != 0 && reached == false) {
+			while (!bh_tas.isEmpty() && reached == false) {
 				nbIteration ++;
 				Label label_temp = null;
 				try {
@@ -57,7 +57,6 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 					bh_tas.deleteMin();
 	
 					label_temp.setMarque(true);
-					nbNodes_unmarqued--;
 					
 					for (int i = 0; i < label_temp.getSommet_courant().getNumberOfSuccessors(); i++) {	
 						Arc arc_node = label_temp.getSommet_courant().getSuccessors().get(i);
@@ -85,6 +84,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 				}
 			}
 		}
+        System.out.println(reached);
+        System.out.println("solution trouvée");
 		
         if (al_Labels.get(data.getDestination().getId()) == null) {
             solution = new ShortestPathSolution(data, Status.INFEASIBLE);
@@ -108,6 +109,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             Path p = new Path(graph, arcs);
             if(p.isValid()) {
                 solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));
+                System.out.println("valid");
             }else {
             	solution = null;
             	
