@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.insa.algo.AbstractSolution.Status;
 import org.insa.algo.utils.BinaryHeap;
-import org.insa.algo.utils.EmptyPriorityQueueException;
 import org.insa.graph.Arc;
 import org.insa.graph.Graph;
 import org.insa.graph.Label;
@@ -51,6 +50,7 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
 
 				Label label_temp = bh_tas.deleteMin();
 				label_temp.setMarque(true);
+				notifyNodeMarked(label_temp.getSommet_courant());
 
 				for (int i = 0; i < label_temp.getSommet_courant().getNumberOfSuccessors(); i++) {
 					Arc arc_node = label_temp.getSommet_courant().getSuccessors().get(i);
@@ -61,6 +61,8 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
 					}
 					lab_node_dest.setSommet_courant(node);
 					LabelStar lab_node_origin = al_Labels.get(arc_node.getOrigin().getId());
+					
+					notifyNodeReached(node);
 
 					if (lab_node_dest.isMarque() == false) {
 
@@ -68,18 +70,21 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
 
 						if (lab_node_dest.getCoût() > newCoutPotentiel) {
 
-							notifyNodeReached(arc_node.getDestination());
-							if (arc_node.getDestination() == destination) {
-								reached = true;
-							}
 							lab_node_dest.setCoût(newCoutPotentiel);
 							lab_node_dest.setPere(arc_node);
-							bh_tas.insert(lab_node_dest);
+							
+							if (arc_node.getDestination() == destination) {
+								reached = true;
+								notifyDestinationReached(destination);
+							}else {
+								bh_tas.insert(lab_node_dest);
+							}
 						}
 					}
 				}
 			}
 		}
+
 
 		if (al_Labels.get(data.getDestination().getId()) == null) {
 			solution = new ShortestPathSolution(data, Status.INFEASIBLE);
@@ -105,12 +110,10 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
 			if (p.isValid()) {
 				solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));
 			} else {
-				solution = null;
+				solution = new ShortestPathSolution(data, Status.INFEASIBLE);
 
 			}
 		}
-
 		return solution;
 	}
-
 }

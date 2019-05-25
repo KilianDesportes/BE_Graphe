@@ -20,16 +20,15 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		boolean reached = false;
 		ShortestPathData data = getInputData();
 		ShortestPathSolution solution = null;
+		Graph graph = data.getGraph();
 
 		Node origin_node = data.getOrigin();
 		Node destination = data.getDestination();
 
-		List<Node> al_Nodes = data.getGraph().getNodes();
+		List<Node> al_Nodes = graph.getNodes();
 		ArrayList<Label> al_Labels = Label.InitGraphNode(al_Nodes);
-
-		Graph graph = data.getGraph();
-
 		BinaryHeap<Label> bh_tas = new BinaryHeap<Label>();
+
 
 		bh_tas.insert(al_Labels.get(origin_node.getId()));
 		al_Labels.get(origin_node.getId()).setCoût(0);
@@ -46,6 +45,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 				
 				Label label_temp = bh_tas.deleteMin();
 				label_temp.setMarque(true);
+				notifyNodeMarked(label_temp.getSommet_courant());
 
 				for (int i = 0 ; i < label_temp.getSommet_courant().getNumberOfSuccessors() && reached == false ; i++) {
 					
@@ -54,6 +54,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 					Label lab_node_dest = al_Labels.get(node.getId());
 					lab_node_dest.setSommet_courant(node);
 					Label lab_node_origin = al_Labels.get(arc_node.getOrigin().getId());
+					
+					notifyNodeReached(node);
 
 					if (lab_node_dest.isMarque() == false) {
 
@@ -61,16 +63,15 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 
 						if (lab_node_dest.getCoût() > newCoutPotentiel) {
 
-							notifyNodeReached(arc_node.getDestination());
-							if (arc_node.getDestination() == destination) {
-								reached = true;
-							}else {
-								bh_tas.insert(lab_node_dest);
-
-							}
 							lab_node_dest.setCoût(newCoutPotentiel);
 							lab_node_dest.setPere(arc_node);
-
+							
+							if (arc_node.getDestination() == destination) {
+								reached = true;
+								notifyDestinationReached(destination);
+							}else {
+								bh_tas.insert(lab_node_dest);
+							}
 						}
 					}
 				}

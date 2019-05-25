@@ -8,28 +8,20 @@ import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.insa.algo.ArcInspector;
 import org.insa.algo.ArcInspectorFactory;
-import org.insa.algo.AbstractSolution.Status;
 import org.insa.algo.shortestpath.ShortestPathData;
-import org.insa.algo.shortestpath.ShortestPathSolution;
 import org.insa.algo.shortestpath.BellmanFordAlgorithm;
 import org.insa.algo.shortestpath.DijkstraAlgorithm;
-import org.insa.graph.RoadInformation.RoadType;
 import org.insa.graph.io.BinaryGraphReader;
-import org.insa.graph.io.BinaryPathReader;
 import org.insa.graph.io.GraphReader;
-import org.insa.graph.io.PathReader;
-import org.insa.graphics.drawing.Drawing;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-public class ShortPathTest {
+public class DijkstraAlgorithmTest {
         
     private static ShortestPathData impossible_path,null_path,shortest_possible_path,shortest_possible_path_car,
     	fastest_possible_path,fastest_possible_path_pedestrian,fastest_possible_path_car;
@@ -51,12 +43,9 @@ public class ShortPathTest {
             System.out.println(ArcInsp.get(i));
 
         }
-
-        
         
         impossible_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(15418),ArcInsp.get(0));               
-        null_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21361),ArcInsp.get(0));
-        
+        null_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21361),ArcInsp.get(0));        
         shortest_possible_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21201),ArcInsp.get(0));
         shortest_possible_path_car = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21201),ArcInsp.get(1));
         fastest_possible_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(21201),ArcInsp.get(2));
@@ -128,7 +117,6 @@ public class ShortPathTest {
         
     }
     
-    //Faire des inégalités (Chemin le moins long moins rapide que le plus rapide et inversement).
     @Test
     public void testDjikstraAlgorithmFastestPathVsShortestPath() {
     	assertTrue(new DijkstraAlgorithm(shortest_possible_path).run().getPath().getLength()<new DijkstraAlgorithm(fastest_possible_path).run().getPath().getLength());
