@@ -10,6 +10,8 @@ import org.insa.algo.utils.EmptyPriorityQueueException;
 import org.insa.graph.*;
 
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
+	
+	int nb_sommets_parcouru = 1;
 
 	public DijkstraAlgorithm(ShortestPathData data) {
 		super(data);
@@ -70,6 +72,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 								reached = true;
 								notifyDestinationReached(destination);
 							}else {
+								nb_sommets_parcouru++;
 								bh_tas.insert(lab_node_dest);
 							}
 						}
@@ -110,4 +113,9 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 		return solution;
 	}
 
+	
+	public int getNbSommetsParcouru() {
+		return this.nb_sommets_parcouru;
+	}
+	
 }

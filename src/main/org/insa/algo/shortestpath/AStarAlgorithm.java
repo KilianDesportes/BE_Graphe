@@ -77,6 +77,7 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
 								reached = true;
 								notifyDestinationReached(destination);
 							}else {
+								nb_sommets_parcouru++;
 								bh_tas.insert(lab_node_dest);
 							}
 						}
