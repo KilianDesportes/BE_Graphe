@@ -15,7 +15,9 @@ import org.insa.algo.ArcInspectorFactory;
 import org.insa.algo.shortestpath.ShortestPathData;
 import org.insa.algo.shortestpath.ShortestPathSolution;
 import org.insa.algo.shortestpath.AStarAlgorithm;
+import org.insa.algo.shortestpath.AStarAlgorithm;
 import org.insa.algo.shortestpath.DijkstraAlgorithm;
+import org.insa.algo.shortestpath.ShortestPathAlgorithm;
 import org.insa.graph.io.BinaryGraphReader;
 import org.insa.graph.io.GraphReader;
 import org.junit.BeforeClass;
@@ -48,13 +50,6 @@ public class AStarAlgorithmTest {
         Graph graph_carreD_map = reader_carreD_map.read();
         
         List<ArcInspector> ArcInsp = ArcInspectorFactory.getAllFilters();
-        
-        System.out.println(ArcInsp);
-        
-        for(int i =0 ;i < 5 ; i ++){
-            System.out.println(ArcInsp.get(i));
-
-        }
         
         //Chemins pour les tests de validités
         impossible_path = new ShortestPathData(graph_guadeloupe_map,graph_guadeloupe_map.get(21361),graph_guadeloupe_map.get(15418),ArcInsp.get(0));               
@@ -147,7 +142,7 @@ public class AStarAlgorithmTest {
     
     
     @Test
-    public void testDjikstraAlgorithmPerformanceToulouse() {
+    public void testAStarAlgorithmPerformanceToulouse() {
     	long f_debut_AStar = System.currentTimeMillis();
     	new AStarAlgorithm(toulouse_path_fastest).run();
     	long f_fin_AStar = System.currentTimeMillis();
@@ -179,7 +174,7 @@ public class AStarAlgorithmTest {
     }
     
     @Test
-    public void testDjikstraAlgorithmPerformanceCarreDense() {
+    public void testAStarAlgorithmPerformanceCarreDense() {
     	long f_debut_AStar = System.currentTimeMillis();
     	new AStarAlgorithm(carreD_path_fastest).run();
     	long f_fin_AStar = System.currentTimeMillis();
@@ -209,7 +204,7 @@ public class AStarAlgorithmTest {
     }
     
     @Test
-    public void testDjikstraAlgorithmPerformanceGuadeloupe() {
+    public void testAStarAlgorithmPerformanceGuadeloupe() {
     	long f_debut_AStar = System.currentTimeMillis();
     	new AStarAlgorithm(fastest_possible_path).run();
     	long f_fin_AStar = System.currentTimeMillis();
@@ -239,7 +234,7 @@ public class AStarAlgorithmTest {
     }
     
     @Test
-    public void testDjikstraAlgorithmPerformanceNodes() {
+    public void testAStarAlgorithmPerformanceNodes() {
 
     	AStarAlgorithm AStar = new AStarAlgorithm(shortest_possible_path);
     	DijkstraAlgorithm Dijkstra = new DijkstraAlgorithm(shortest_possible_path);
@@ -247,24 +242,6 @@ public class AStarAlgorithmTest {
     	Dijkstra.run();
     	
     	System.out.println("Nombre de sommet parcouru - Guadeloupe shortest");
-    	System.out.println("AStar " + AStar.getNbSommetsParcouru());
-    	System.out.println("Dijkstra " + Dijkstra.getNbSommetsParcouru());
-    	
-    	AStar = new AStarAlgorithm(carreD_path_shortest);
-    	Dijkstra = new DijkstraAlgorithm(carreD_path_shortest);
-    	AStar.run();
-    	Dijkstra.run();
-    	
-    	System.out.println("Nombre de sommet parcouru - Carre Dense shortest");
-    	System.out.println("AStar " + AStar.getNbSommetsParcouru());
-    	System.out.println("Dijkstra " + Dijkstra.getNbSommetsParcouru());
-    	
-    	AStar = new AStarAlgorithm(toulouse_path_shortest);
-    	Dijkstra = new DijkstraAlgorithm(toulouse_path_shortest);
-    	AStar.run();
-    	Dijkstra.run();
-    	
-    	System.out.println("Nombre de sommet parcouru - Toulouse shortest");
     	System.out.println("AStar " + AStar.getNbSommetsParcouru());
     	System.out.println("Dijkstra " + Dijkstra.getNbSommetsParcouru());
     	
@@ -277,12 +254,32 @@ public class AStarAlgorithmTest {
     	System.out.println("AStar " + AStar.getNbSommetsParcouru());
     	System.out.println("Dijkstra " + Dijkstra.getNbSommetsParcouru());
     	
+    	AStar = new AStarAlgorithm(carreD_path_shortest);
+    	Dijkstra = new DijkstraAlgorithm(carreD_path_shortest);
+    	AStar.run();
+    	Dijkstra.run();
+
+    	System.out.println("Nombre de sommet parcouru - Carre Dense shortest");
+    	System.out.println("AStar " + AStar.getNbSommetsParcouru());
+    	System.out.println("Dijkstra " + Dijkstra.getNbSommetsParcouru());
+    	
     	AStar = new AStarAlgorithm(carreD_path_fastest);
     	Dijkstra = new DijkstraAlgorithm(carreD_path_fastest);
     	AStar.run();
     	Dijkstra.run();
     	
     	System.out.println("Nombre de sommet parcouru - Carre Dense fastest");
+    	System.out.println("AStar " + AStar.getNbSommetsParcouru());
+    	System.out.println("Dijkstra " + Dijkstra.getNbSommetsParcouru());
+    	
+
+    	
+    	AStar = new AStarAlgorithm(toulouse_path_shortest);
+    	Dijkstra = new DijkstraAlgorithm(toulouse_path_shortest);
+    	AStar.run();
+    	Dijkstra.run();
+    	
+    	System.out.println("Nombre de sommet parcouru - Toulouse Shortest");
     	System.out.println("AStar " + AStar.getNbSommetsParcouru());
     	System.out.println("Dijkstra " + Dijkstra.getNbSommetsParcouru());
     	
@@ -294,11 +291,6 @@ public class AStarAlgorithmTest {
     	System.out.println("Nombre de sommet parcouru - Toulouse fastest");
     	System.out.println("AStar " + AStar.getNbSommetsParcouru());
     	System.out.println("Dijkstra " + Dijkstra.getNbSommetsParcouru());
-    	
-    	
-    	
-    	
 
     }
-    
 }

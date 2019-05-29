@@ -16,6 +16,8 @@ public class BellmanFordAlgorithm extends ShortestPathAlgorithm {
         super(data);
     }
 
+	int nb_sommets_parcouru = 1;
+    
     @Override
     protected ShortestPathSolution doRun() {
 
@@ -63,6 +65,7 @@ public class BellmanFordAlgorithm extends ShortestPathAlgorithm {
                         found = false;
                         distances[arc.getDestination().getId()] = distances[node.getId()] + w;
                         predecessorArcs[arc.getDestination().getId()] = arc;
+						nb_sommets_parcouru++;
                     }
                 }
             }
@@ -96,5 +99,9 @@ public class BellmanFordAlgorithm extends ShortestPathAlgorithm {
 
         return solution;
     }
+    
+	public int getNbSommetsParcouru() {
+		return this.nb_sommets_parcouru;
+	}
 
 }
