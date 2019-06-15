@@ -1,62 +1,27 @@
-# Graph & Algorithm project &mdash; INSA Toulouse
+## Bureau d'étude Graphe &mdash; INSA Toulouse
 
-## How to start?
+DELIOT Maxence
 
-You will not be able to use this repository to save your work, you need to copy / import / fork it to 
-your favorite Git platform.
+DESPORTES Kilian
 
-### Importing to [Github](https://github.com), [Bitbucket](https://bitbucket.org) or [Gitlab](https://gitlab.com):
 
-You first need to register and then log in to the platform you want. The steps to import the project are detailed below:
+3 MIC
+Groupe C
+2018-2019.
 
-#### Github
 
-1. In the upper-right corner of any page, click the **"+"** icon, then click **Import repository**, or go to [https://github.com/new/import](https://github.com/new/import). 
-2. Paste the following URL in the first input:
-     [https://gitea.typename.fr/INSA/be-graphes.git](https://gitea.typename.fr/INSA/be-graphes.git)
-3. Choose the name you want for the repository.
-4. Click *Begin import*.
-5. Wait for completion... Done!
+Projet Java concernant le calcul de plus court chemin par plusieurs moyens, via l'implémentation des algorithmes de Dijkstra et A* et des outils nécessaires à leurs implémentations (BinaryHeap, Path).
 
-#### Bitbucket
+Réalisation de tests de validations et de performances de nos algorithmes grâce au framework JUnit.
 
-1. On the left panel of any page, click the **"+"** icon, then **Repository**, and then **Import**, or directly go to [https://bitbucket.org/repo/import](https://bitbucket.org/repo/import). 
-2. Paste the following URL in the first input (select Git as source if not already selected):
-     [https://gitea.typename.fr/INSA/be-graphes.git](https://gitea.typename.fr/INSA/be-graphes.git)
-3. Choose the name you want for repository, and select Git as the *Version control system*.
-4. Click *Import repository*.
-5. Wait for completion... Done!
+Les algorithmes que nous avons développés sont présents dans : *src/main/org/insa/algo/shortestpath/*
+* DijkstraAlgorithm.java
+* AStarAlgorithm.java
 
-#### Gitlab
+et les tests dans : *src/test/org/insa/graph/*
+* DijkstraAlgorithmTest.java
+* AStarAlgorithmTest.java
 
-1. In the upper-right corner of any page, click the **"+"** icon, then **New project**, or directly go to [https://gitlab.com/projects/new](https://gitlab.com/projects/new).
-2. Select the **Import project** tab, and then click **Repo by URL** (right-most option).
-3. Paste the following URL in the first input:
-     [https://gitea.typename.fr/INSA/be-graphes.git](https://gitea.typename.fr/INSA/be-graphes.git)
-4. Choose the name you want for the repository.
-5. Click *Create project*.
-6. Wait for completion... Done!
 
-### Importing to another repository provider *[not recommended]*:
+Les cartes nécessaires aux tests ne sont pas disponibles dans ce git à cause de leurs grandes tailles.
 
-1. Create a new **empty** repository (no README, no LICENSE) on your provider. Let's assume the URL of your repository is `$URL_REPOSITORY`.
-2. Clone this repository somewhere:
-
-    ```bash
-	git clone https://gitea.typename.fr/INSA/be-graphes.git
-	```
-    
-3. Go inside the newly cloned repository and update the **remote**:
-   
-    ```bash
-	cd be-graphes
-	git remote set-url origin $URL_REPOSITORY
-	```
-    
-4. Push to your repository:
-
-    ```bash
-	push -u origin master
-	```
-	
-Another way is to do a bare clone and then mirror it to your repository: [https://help.github.com/articles/importing-a-git-repository-using-the-command-line/](https://help.github.com/articles/importing-a-git-repository-using-the-command-line/)
