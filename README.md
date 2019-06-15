@@ -9,6 +9,7 @@ DESPORTES Kilian
 Groupe C
 2018-2019.
 
+L'ensemble de ce git est un projet *Eclipse* utilisable.
 
 Projet Java concernant le calcul de plus court chemin par plusieurs moyens, via l'implémentation des algorithmes de Dijkstra et A* et des outils nécessaires à leurs implémentations (BinaryHeap, Path).
 
