@@ -11,9 +11,10 @@ Groupe C
 
 L'ensemble de ce git est un projet *Eclipse* utilisable.
 
-Projet Java concernant le calcul de plus court chemin par plusieurs moyens, via l'implémentation des algorithmes de Dijkstra et A* et des outils nécessaires à leurs implémentations (BinaryHeap, Path).
+La quasi totalité des sources du projet nous ont été fournis au début de celui-ci.
 
-Réalisation de tests de validations et de performances de nos algorithmes grâce au framework JUnit.
+Le projet avait pour but l'implémentation des algorithmes de Dijkstra et A* pour réaliser un calcul de plus court chemin sur plusieurs cartes.
+Nous avons également réalisé des tests de validations et de performances de nos algorithmes grâce au framework JUnit.
 
 Les algorithmes que nous avons développés sont présents dans : *src/main/org/insa/algo/shortestpath/*
 * DijkstraAlgorithm.java
