@@ -9,21 +9,18 @@ DESPORTES Kilian
 Groupe C
 2018-2019.
 
-L'ensemble de ce git est un projet *Eclipse* utilisable.
+This entire git is a usable *Eclipse* project.
 
-La quasi totalité des sources du projet nous ont été fournis au début de celui-ci.
+Almost all the sources of the project were provided to us at the beginning of the project.
 
-Le projet avait pour but l'implémentation des algorithmes de Dijkstra et A* pour réaliser un calcul de plus court chemin sur plusieurs cartes.
-Nous avons également réalisé des tests de validations et de performances de nos algorithmes grâce au framework JUnit.
+The goal of the project was to implement the Dijkstra and A* algorithms to perform a shorter path calculation on several maps. We also performed validation and performance tests of our algorithms using the JUnit framework.
 
-Les algorithmes que nous avons développés sont présents dans : *src/main/org/insa/algo/shortestpath/*
+The algorithms we have developed can be found in: *src/main/org/insa/algo/shortestpath/*
 * DijkstraAlgorithm.java
 * AStarAlgorithm.java
 
-et les tests dans : *src/test/org/insa/graph/*
+and the tests in: *src/test/org/insa/graph/*
 * DijkstraAlgorithmTest.java
 * AStarAlgorithmTest.java
 
-
-Les cartes nécessaires aux tests ne sont pas disponibles dans ce git à cause de leurs grandes tailles.
-
+The cards needed for the tests are not available in this git because of their large sizes.
