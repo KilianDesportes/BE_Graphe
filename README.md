@@ -1,4 +1,4 @@
-## Bureau d'étude Graphe &mdash; INSA Toulouse
+## Shortest Path Project &mdash; INSA Toulouse
 
 DELIOT Maxence
 
@@ -6,7 +6,7 @@ DESPORTES Kilian
 
 
 3 MIC
-Groupe C
+Group C
 2018-2019.
 
 This entire git is a usable *Eclipse* project.
